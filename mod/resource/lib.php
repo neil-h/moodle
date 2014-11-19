@@ -102,6 +102,7 @@ function resource_add_instance($data, $mform) {
     $cmid = $data->coursemodule;
     $data->timemodified = time();
 
+    resource_set_context_options($data);
     resource_set_display_options($data);
 
     $data->id = $DB->insert_record('resource', $data);
@@ -125,6 +126,7 @@ function resource_update_instance($data, $mform) {
     $data->id           = $data->instance;
     $data->revision++;
 
+    resource_set_context_options($data);
     resource_set_display_options($data);
 
     $DB->update_record('resource', $data);
@@ -141,10 +143,11 @@ function resource_update_instance($data, $mform) {
  ***/
 function resource_set_context_options($data) {
     $resourcecontextoptions = array();
-    if ($data->useothercontext == 1) {
+    //if ($data->useothercontext == 1) {
+        $resourcecontextoptions['useothercontext']  = $data->useothercontext;
         $resourcecontextoptions['selectcontext']  = $data->selectcontext;
         $resourcecontextoptions['mainfilepath'] = $data->mainfilepath;
-    }
+    //}
     $data->resourcecontextoptions = serialize($resourcecontextoptions);
 }
 
