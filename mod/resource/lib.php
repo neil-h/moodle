@@ -132,6 +132,22 @@ function resource_update_instance($data, $mform) {
     return true;
 }
 
+/***
+ *** Updates context options based on form input.
+ ***
+ *** Shared code used by resource_add_instance and resource_update_instance.
+ ***
+ *** @param object $data Data object
+ ***/
+function resource_set_context_options($data) {
+    $resourcecontextoptions = array();
+    if ($data->useothercontext == 1) {
+        $resourcecontextoptions['selectcontext']  = $data->selectcontext;
+        $resourcecontextoptions['mainfilepath'] = $data->mainfilepath;
+    }
+    $data->resourcecontextoptions = serialize($resourcecontextoptions);
+}
+
 /**
  * Updates display options based on form input.
  *
