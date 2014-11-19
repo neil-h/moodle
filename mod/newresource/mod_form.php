@@ -61,6 +61,22 @@ class mod_resource_mod_form extends moodleform_mod {
         $mform->addElement('header', 'contentsection', get_string('contentheader', 'resource'));
         $mform->setExpanded('contentsection');
 
+        $mform->addElement('checkbox', 'useothercontext', get_string('useothercontext', 'resource'));
+        $mform->setDefault('useothercontext', $config->useothercontext);
+        $mform->addHelpButton('useothercontext', 'useothercontext', 'resource');
+        $mform->addElement('text', 'selectcontext', get_string('selectcontext', 'resource'), array('size'=>7));
+        $mform->setType('selectcontext', PARAM_INT);
+        $mform->setDefault('selectcontext', $config->selectcontext);
+        $mform->addHelpButton('selectcontext', 'selectcontext', 'resource');
+        $mform->addElement('text', 'mainfilepath', get_string('mainfilepath', 'resource'), array('size'=>'100'));
+        if (!empty($CFG->formatstringstriptags)) {
+            $mform->setType('name', PARAM_TEXT);
+        } else {
+            $mform->setType('name', PARAM_CLEANHTML);
+        }
+        $mform->addRule('mainfilepath', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
+        $mform->addHelpButton('mainfilepath', 'mainfilepath', 'resource');
+
         $filemanager_options = array();
         $filemanager_options['accepted_types'] = '*';
         $filemanager_options['maxbytes'] = 0;

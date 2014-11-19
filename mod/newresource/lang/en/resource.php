@@ -106,3 +106,9 @@ $string['showtype_help'] = 'Displays the type of the file, such as \'Word docume
 If there are multiple files in this resource, the start file type is displayed.
 
 If the file type is not known to the system, it will not display.';
+$string['useothercontext'] = 'Use other context';
+$string['useothercontext_help'] = 'If checked, use files from another resource, instead of the filearea below.';
+$string['selectcontext'] = 'Select context';
+$string['selectcontext_help'] = 'Enter the number of the context you wish to access.';
+$string['mainfilepath'] = 'Main file path';
+$string['mainfilepath_help'] = 'The path, within the selected context, to your desired main file.';
