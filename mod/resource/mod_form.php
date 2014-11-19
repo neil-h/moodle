@@ -70,9 +70,9 @@ class mod_resource_mod_form extends moodleform_mod {
         $mform->addHelpButton('selectcontext', 'selectcontext', 'resource');
         $mform->addElement('text', 'mainfilepath', get_string('mainfilepath', 'resource'), array('size'=>'100'));
         if (!empty($CFG->formatstringstriptags)) {
-            $mform->setType('name', PARAM_TEXT);
+            $mform->setType('mainfilepath', PARAM_TEXT);
         } else {
-            $mform->setType('name', PARAM_CLEANHTML);
+            $mform->setType('mainfilepath', PARAM_CLEANHTML);
         }
         $mform->addRule('mainfilepath', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         $mform->addHelpButton('mainfilepath', 'mainfilepath', 'resource');
@@ -167,6 +167,18 @@ class mod_resource_mod_form extends moodleform_mod {
 
     function data_preprocessing(&$default_values) {
         if ($this->current->instance and !$this->current->tobemigrated) {
+            if (!empty($default_values['resourcecontextoptions'])) {
+                $resourcecontextoptions = unserialize($default_values['resourcecontextoptions']);
+                if (isset($resourcecontextoptions['useothercontext'])) {
+                    $default_values['useothercontext'] = $resourcecontextoptions['useothercontext'];
+                }
+                if (!empty($resourcecontextoptions['selectcontext'])) {
+                    $default_values['selectcontext'] = $resourcecontextoptions['selectcontext'];
+                }
+                if (!empty($resourcecontextoptions['mainfilepath'])) {
+                    $default_values['mainfilepath'] = $resourcecontextoptions['mainfilepath'];
+                }
+            }
             $draftitemid = file_get_submitted_draft_itemid('files');
             file_prepare_draft_area($draftitemid, $this->context->id, 'mod_resource', 'content', 0, array('subdirs'=>true));
             $default_values['files'] = $draftitemid;
