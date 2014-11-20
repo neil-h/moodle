@@ -111,4 +111,6 @@ $string['useothercontext_help'] = 'If checked, use files from another resource, 
 $string['selectcontext'] = 'Select context';
 $string['selectcontext_help'] = 'Enter the number of the context you wish to access.';
 $string['mainfilepath'] = 'Main file path';
-$string['mainfilepath_help'] = 'The path, within the selected context, to your desired main file.';
+$string['mainfilepath_help'] = 'The path, within the selected context, to your desired main file.
+
+The first character should be a forward slash \'/\'.';

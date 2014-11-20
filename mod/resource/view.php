@@ -49,7 +49,13 @@ if ($r) {
 $course = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST);
 
 require_course_login($course, true, $cm);
-$context = context_module::instance($cm->id);
+$resourcecontextoptions = unserialize($resource->resourcecontextoptions);
+if ($resourcecontextoptions['useothercontext'] == 1){
+    $othercontext = TRUE;
+    $context = context_module::instance($resourcecontextoptions['selectcontext']);
+} else {
+    $context = context_module::instance($cm->id);
+}
 require_capability('mod/resource:view', $context);
 
 $params = array(
@@ -95,11 +101,17 @@ if ($displaytype == RESOURCELIB_DISPLAY_OPEN || $displaytype == RESOURCELIB_DISP
 }
 
 if ($redirect) {
-    // coming from course page or url index page
-    // this redirect trick solves caching problems when tracking views ;-)
-    $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$file->get_filepath().$file->get_filename();
-    $fullurl = moodle_url::make_file_url('/pluginfile.php', $path, $displaytype == RESOURCELIB_DISPLAY_DOWNLOAD);
-    redirect($fullurl);
+    if ($othercontext){
+        $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$resourcecontextoptions['mainfilepath'];
+        $fullurl = moodle_url::make_file_url('/pluginfile.php', $path, $displaytype == RESOURCELIB_DISPLAY_DOWNLOAD);
+        redirect($fullurl);
+    } else {
+        // coming from course page or url index page
+        // this redirect trick solves caching problems when tracking views ;-)
+        $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$file->get_filepath().$file->get_filename();
+        $fullurl = moodle_url::make_file_url('/pluginfile.php', $path, $displaytype == RESOURCELIB_DISPLAY_DOWNLOAD);
+        redirect($fullurl);
+    }
 }
 
 switch ($displaytype) {
