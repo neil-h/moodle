@@ -120,7 +120,7 @@ switch ($displaytype) {
         resource_display_frame($resource, $cm, $course, $file);
         break;
     default:
-        resource_print_workaround($resource, $cm, $course, $file);
+        resource_print_workaround($resource, $cm, $course, $file, $resourcecontextoptions);
         break;
 }
 

@@ -203,7 +203,7 @@ function resource_get_clicktodownload($file, $revision) {
  * @param stored_file $file main file
  * @return does not return
  */
-function resource_print_workaround($resource, $cm, $course, $file) {
+function resource_print_workaround($resource, $cm, $course, $file, $resourcecontextoptions=null) {
     global $CFG, $OUTPUT;
 
     resource_print_header($resource, $cm, $course);
@@ -214,7 +214,12 @@ function resource_print_workaround($resource, $cm, $course, $file) {
     echo '<div class="resourceworkaround">';
     switch (resource_get_final_display_type($resource)) {
         case RESOURCELIB_DISPLAY_POPUP:
-            $path = '/'.$file->get_contextid().'/mod_resource/content/'.$resource->revision.$file->get_filepath().$file->get_filename();
+            if ($resourcecontextoptions['useothercontext'] == 1){
+                $context = context_module::instance($resourcecontextoptions['selectcontext']);
+                $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$resourcecontextoptions['mainfilepath'];
+            } else {
+                $path = '/'.$file->get_contextid().'/mod_resource/content/'.$resource->revision.$file->get_filepath().$file->get_filename();
+            }
             $fullurl = file_encode_url($CFG->wwwroot.'/pluginfile.php', $path, false);
             $options = empty($resource->displayoptions) ? array() : unserialize($resource->displayoptions);
             $width  = empty($options['popupwidth'])  ? 620 : $options['popupwidth'];
