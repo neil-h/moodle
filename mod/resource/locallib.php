@@ -60,13 +60,17 @@ function resource_redirect_if_migrated($oldid, $cmid) {
  * @param stored_file $file main file
  * @return does not return
  */
-function resource_display_embed($resource, $cm, $course, $file) {
+function resource_display_embed($resource, $cm, $course, $file, $resourcecontextoptions=null) {
     global $CFG, $PAGE, $OUTPUT;
 
     $clicktoopen = resource_get_clicktoopen($file, $resource->revision);
-
-    $context = context_module::instance($cm->id);
-    $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$file->get_filepath().$file->get_filename();
+    if ($resourcecontextoptions['useothercontext'] == 1){
+	$context = context_module::instance($resourcecontextoptions['selectcontext']);
+        $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$resourcecontextoptions['mainfilepath'];
+    } else {
+        $context = context_module::instance($cm->id);
+        $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$file->get_filepath().$file->get_filename();
+    }
     $fullurl = file_encode_url($CFG->wwwroot.'/pluginfile.php', $path, false);
     $moodleurl = new moodle_url('/pluginfile.php' . $path);
 

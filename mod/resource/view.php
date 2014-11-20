@@ -114,7 +114,7 @@ if ($redirect) {
 
 switch ($displaytype) {
     case RESOURCELIB_DISPLAY_EMBED:
-        resource_display_embed($resource, $cm, $course, $file);
+        resource_display_embed($resource, $cm, $course, $file, $resourcecontextoptions);
         break;
     case RESOURCELIB_DISPLAY_FRAME:
         resource_display_frame($resource, $cm, $course, $file);
