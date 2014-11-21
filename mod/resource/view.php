@@ -87,7 +87,7 @@ if (count($files) < 1) {
             break;
         }
     }
-    if ($file == null){
+    if (!isset($file)){
         $file = reset($files);
     }
     unset($files);
