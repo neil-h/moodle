@@ -61,6 +61,12 @@ class mod_resource_mod_form extends moodleform_mod {
         $mform->addElement('header', 'contentsection', get_string('contentheader', 'resource'));
         $mform->setExpanded('contentsection');
 
+        // This is where the new form elements go
+        /* We should have a dropdown, to select which resource to access files from (including self).
+         * We want to use the contents of said dropdown, to change the operation of the $filemanager.
+         * We also need somewhere to store the selected mainfile for each resource instance.
+         */
+
         $filemanager_options = array();
         $filemanager_options['accepted_types'] = '*';
         $filemanager_options['maxbytes'] = 0;

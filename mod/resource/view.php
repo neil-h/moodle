@@ -49,7 +49,8 @@ if ($r) {
 $course = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST);
 
 require_course_login($course, true, $cm);
-$context = context_module::instance($cm->id);
+//$context = context_module::instance($cm->id);
+$context = context_module::instance(2);//Magic number
 require_capability('mod/resource:view', $context);
 
 $params = array(
@@ -79,7 +80,14 @@ if (count($files) < 1) {
     resource_print_filenotfound($resource, $cm, $course);
     die;
 } else {
-    $file = reset($files);
+    $vv = 26;//Magic number
+    foreach($files as $onefile) {
+        if ($vv == $onefile->get_id()) {
+            $file = $onefile;
+            break;
+        }
+    }
+    //$file = reset($files);
     unset($files);
 }
 
