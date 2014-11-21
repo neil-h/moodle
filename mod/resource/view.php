@@ -80,14 +80,16 @@ if (count($files) < 1) {
     resource_print_filenotfound($resource, $cm, $course);
     die;
 } else {
-    $vv = 26;//Magic number
+    $selectedFile = '/html/L2-1.html';//Magic number
     foreach($files as $onefile) {
-        if ($vv == $onefile->get_id()) {
+        if ($selectedFile == ($onefile->get_filepath().$onefile->get_filename())){
             $file = $onefile;
             break;
         }
     }
-    //$file = reset($files);
+    if ($file == null){
+        $file = reset($files);
+    }
     unset($files);
 }
 
