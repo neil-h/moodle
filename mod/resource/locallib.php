@@ -474,7 +474,7 @@ function resource_set_mainfile($data) {
  * Fetch all file-containing resources from course, and prepare list for File Source Selection dropdown.
  */
 function resource_get_file_sources($courseid){
-    global $DB, $CFG;
+    global $DB;
     
     $params = array();
     if (!empty($courseid)) {
@@ -484,16 +484,18 @@ function resource_get_file_sources($courseid){
     }
     
     $course = $DB->get_record('course', $params, '*');
-    $modinfo = get_fast_modinfo($course);
-    //$modnamesused = $modinfo->get_used_module_names();
-    //$mods = $modinfo->get_cms();
-    
-    $filesources = array_filter($modinfo->get_cms(), function($mod){
+    $filesources = array_filter(get_fast_modinfo($course)->get_cms(), function($mod){
         $result = $mod->modname;
         return($result === 'resource' || $result === 'folder');
     });
+    $filesourcenames = $filesources;
+    foreach($filesourcenames as &$name){
+        $name = $name->name;
+    }
     
-    $options = array('0' => get_string('selectfilesourcethisone', 'resource'), '1' => get_string('allfiles'), '2' => get_string('htmlfilesonly'));
+    $thisone = array('0' => get_string('selectfilesourcethisone', 'resource'));
+    $options = array_merge($thisone, $filesourcenames);
+    
     
     return $options;
 }
