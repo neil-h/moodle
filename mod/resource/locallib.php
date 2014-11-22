@@ -469,3 +469,31 @@ function resource_set_mainfile($data) {
         file_set_sortorder($context->id, 'mod_resource', 'content', 0, $file->get_filepath(), $file->get_filename(), 1);
     }
 }
+
+/*
+ * Fetch all file-containing resources from course, and prepare list for File Source Selection dropdown.
+ */
+function resource_get_file_sources($courseid){
+    global $DB, $CFG;
+    
+    $params = array();
+    if (!empty($courseid)) {
+        $params = array('id' => $courseid);
+    }else {
+        print_error('unspecifycourseid', 'error');
+    }
+    
+    $course = $DB->get_record('course', $params, '*');
+    $modinfo = get_fast_modinfo($course);
+    //$modnamesused = $modinfo->get_used_module_names();
+    //$mods = $modinfo->get_cms();
+    
+    $filesources = array_filter($modinfo->get_cms(), function($mod){
+        $result = $mod->modname;
+        return($result === 'resource' || $result === 'folder');
+    });
+    
+    $options = array('0' => get_string('selectfilesourcethisone', 'resource'), '1' => get_string('allfiles'), '2' => get_string('htmlfilesonly'));
+    
+    return $options;
+}
