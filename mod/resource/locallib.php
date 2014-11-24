@@ -493,9 +493,16 @@ function resource_get_file_sources($courseid){
         $name = $name->name;
     }
     
-    $thisone = array('0' => get_string('selectfilesourcethisone', 'resource'));
-    $options = array_merge($thisone, $filesourcenames);
+    $thisname = array('0' => get_string('selectfilesourcethisone', 'resource'));
+    $names = array_merge($thisname, $filesourcenames);
     
+    $filesourceids = $filesources;
+    foreach($filesourceids as &$id){
+        $id = $id->id;
+    }
     
-    return $options;
+    $thisid = array('0' => NULL);
+    $ids = array_merge($thisid, $filesourceids);
+    
+    return array($names, $ids);
 }
