@@ -510,39 +510,14 @@ function resource_get_file_sources($courseid){
 /*
  * Generate list of files in selected resource .
  */
-function resource_get_file_and_path($courseid, $filesourceid){
+function resource_get_file_and_path($filesourceid){
     global $DB;
     
-    $params = array();
-    if (!empty($courseid)) {
-        $params = array('id' => $courseid);
-    }else {
-        print_error('unspecifycourseid', 'error');
-    }
+    $fs = get_file_storage();
+    $context = context_module::instance($filesourceid);
     
-    $course = $DB->get_record('course', $params, '*');
-    $modinfo = get_fast_modinfo($course);
-    //$modcms = $modinfo->get_cms();
-    //$filesources = array_filter($modcms, function($mod, $filesourceid){
-    //    $result = $mod->id;
-    //    return($result == $filesourceid);
-    //});
-    $modcmid = $modinfo->get_cmid($filesourceid);
-    $filesourcenames = $modcmid;
-    foreach($filesourcenames as &$name){
-        $name = $name->name;
-    }
+    $files = $fs->get_area_files($context->id, 'mod_resource', 'content', 0, 'sortorder', false);
     
-    $thisname = array('0' => get_string('selectfilesourcethisone', 'resource'));
-    $names = array_merge($thisname, $filesourcenames);
-    
-    $filesourceids = $filesources;
-    foreach($filesourceids as &$id){
-        $id = $id->id;
-    }
-    
-    $thisid = array('0' => NULL);
-    $ids = array_merge($thisid, $filesourceids);
-    
-    return array($names, $ids);
+    $filelist = array("0" => "0th", "1" => "1st");
+    return $filelist;
 }

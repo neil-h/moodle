@@ -96,7 +96,7 @@ $string['resource:view'] = 'View resource';
 $string['selectmainfile'] = 'Please select the main file by clicking the icon next to file name.';
 $string['selectfileandpath'] = 'Now chum, which file shall we use?';
 $string['selectfilesource'] = 'Which item shall we pull our file from today?';
-$string['selectfilesourcethisone'] = 'Oow, oow, let\'s use this one!';
+$string['selectfilesourcethisone'] = 'Ooh, ooh, let\'s use this one!';
 $string['showsize'] = 'Show size';
 $string['showsize_help'] = 'Displays the file size, such as \'3.1 MB\', beside links to the file.
 
