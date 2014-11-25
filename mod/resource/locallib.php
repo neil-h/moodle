@@ -511,6 +511,8 @@ function resource_get_file_sources($courseid){
  * Generate list of files in selected resource .
  */
 function resource_get_file_and_path($filesourceid){
+    global $DB;
+
     function name_and_path($file){
         return $file->get_filepath().$file->get_filename();
     }
@@ -522,22 +524,12 @@ function resource_get_file_and_path($filesourceid){
             $result = strcmp($nameA, $nameB);
             return $result;
         } else {
-            if ($a->get_filepath() == '/'){
-                $pathA = '';
-            } else {
-                $pathA = strtolower( substr($a->get_filepath(), 1) );
-            }
-            if ($b->get_filepath() == '/'){
-                $pathB = '';
-            } else {
-                $pathB = strtolower( substr($b->get_filepath(), 1) );
-            }
+            $pathA = $a->get_filepath();
+            $pathB = $b->get_filepath();
             $result = strcmp($pathA, $pathB);
             return $result;
         }
     }
-
-    global $DB;
 
     $fs = get_file_storage();
     $context = context_module::instance($filesourceid);
