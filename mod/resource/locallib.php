@@ -471,7 +471,7 @@ function resource_set_mainfile($data) {
 }
 
 /*
- * Fetch all file-containing resources from course, and prepare list for File Source Selection dropdown.
+ * Fetch all file-containing resources from course, and prepare array for File Source Selection dropdown.
  */
 function resource_get_file_sources($courseid){
     global $DB;
@@ -489,6 +489,46 @@ function resource_get_file_sources($courseid){
         return($result === 'resource' || $result === 'folder');
     });
     $filesourcenames = $filesources;
+    foreach($filesourcenames as &$name){
+        $name = $name->name;
+    }
+    
+    $thisname = array('0' => get_string('selectfilesourcethisone', 'resource'));
+    $names = array_merge($thisname, $filesourcenames);
+    
+    $filesourceids = $filesources;
+    foreach($filesourceids as &$id){
+        $id = $id->id;
+    }
+    
+    $thisid = array('0' => NULL);
+    $ids = array_merge($thisid, $filesourceids);
+    
+    return array($names, $ids);
+}
+
+/*
+ * Generate list of files in selected resource .
+ */
+function resource_get_file_and_path($courseid, $filesourceid){
+    global $DB;
+    
+    $params = array();
+    if (!empty($courseid)) {
+        $params = array('id' => $courseid);
+    }else {
+        print_error('unspecifycourseid', 'error');
+    }
+    
+    $course = $DB->get_record('course', $params, '*');
+    $modinfo = get_fast_modinfo($course);
+    //$modcms = $modinfo->get_cms();
+    //$filesources = array_filter($modcms, function($mod, $filesourceid){
+    //    $result = $mod->id;
+    //    return($result == $filesourceid);
+    //});
+    $modcmid = $modinfo->get_cmid($filesourceid);
+    $filesourcenames = $modcmid;
     foreach($filesourcenames as &$name){
         $name = $name->name;
     }

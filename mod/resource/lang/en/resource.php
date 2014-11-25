@@ -94,6 +94,7 @@ $string['resourcedetails_sizetype'] = '{$a->size} {$a->type}';
 $string['resource:exportresource'] = 'Export resource';
 $string['resource:view'] = 'View resource';
 $string['selectmainfile'] = 'Please select the main file by clicking the icon next to file name.';
+$string['selectfileandpath'] = 'Now chum, which file shall we use?';
 $string['selectfilesource'] = 'Which item shall we pull our file from today?';
 $string['selectfilesourcethisone'] = 'Oow, oow, let\'s use this one!';
 $string['showsize'] = 'Show size';
