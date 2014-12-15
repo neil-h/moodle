@@ -26,18 +26,16 @@ YUI.add('moodle-mod_resource-fileselect', function (Y, NAME) {
  */
 
 M.mod_resource = M.mod_resource || {};
-NS = M.mod_resource.fileselect;
+NS = M.mod_resource.fileselect = {};
 
 NS.init = function() {
 
-    console.log('added');
-
-    var res = 2;
-
-    console.log('res = ' + res);
+    var resid = 2;
+    var url = M.cfg.wwwroot + '/mod/resource/ajax.php';
+    console.log('url = ' + url);
 
     document.getElementById("id_selectfilesource").onchange = function () {
-        makeRequest('resource_select.php?res=' + res);
+        makeRequest(url + '?resid=' + resid);
         console.log('changed');
     };
 

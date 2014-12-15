@@ -24,16 +24,16 @@
  */
 
 M.mod_resource = M.mod_resource || {};
-NS = M.mod_resource.fileselect;
+NS = M.mod_resource.fileselect = {};
 
 NS.init = function() {
 
     var resid = 2;
-
-    console.log('resid = ' + resid);
+    var url = M.cfg.wwwroot + '/mod/resource/ajax.php';
+    console.log('url = ' + url);
 
     document.getElementById("id_selectfilesource").onchange = function () {
-        makeRequest('resource_select.php?resid=' + res);
+        makeRequest(url + '?resid=' + resid);
         console.log('changed');
     };
 
