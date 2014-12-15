@@ -29,6 +29,8 @@ require_once($CFG->dirroot.'/course/moodleform_mod.php');
 require_once($CFG->dirroot.'/mod/resource/locallib.php');
 require_once($CFG->libdir.'/filelib.php');
 
+$PAGE->requires->yui_module('moodle-mod_resource-fileselect', 'M.mod_resource.fileselect.init');
+
 class mod_resource_mod_form extends moodleform_mod {
     function definition() {
         global $CFG, $DB;
@@ -68,9 +70,10 @@ class mod_resource_mod_form extends moodleform_mod {
          */
         $selectfilesource = resource_get_file_sources($this->current->course);
         $mform->addElement('select', 'selectfilesource', get_string('selectfilesource', 'resource'), $selectfilesource[0]);
-        
+               
         $filesourceid = $selectfilesource[1][array_search( /*result of above selectbox*/ 'Files', $selectfilesource[0] )];
         $selectfileandpath = resource_get_file_and_path($this->current->course, $filesourceid);
+        // $selectfileandpath = NULL;
         $mform->addElement('select', 'selectfileandpath', get_string('selectfileandpath', 'resource'), $selectfileandpath);
         
         // End of new stuff
