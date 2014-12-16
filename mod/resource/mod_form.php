@@ -64,16 +64,15 @@ class mod_resource_mod_form extends moodleform_mod {
         $mform->setExpanded('contentsection');
 
         // This is where the new form elements go
-        /* We should have a dropdown, to select which resource to access files from (including self).
-         * We want to use the contents of said dropdown, to change the operation of the $filemanager.
-         * We also need somewhere to store the selected mainfile for each resource instance.
+        /* We should have a dropdown to select which resource to access files from (including self).
+         * We also need a dropdown to select the mainfile.
          */
         $selectfilesource = resource_get_file_sources($this->current->course);
-        $mform->addElement('select', 'selectfilesource', get_string('selectfilesource', 'resource'), $selectfilesource[0]);
+        $mform->addElement('select', 'selectfilesource', get_string('selectfilesource', 'resource'), $selectfilesource);
                
-        $filesourceid = $selectfilesource[1][array_search( /*result of above selectbox*/ 'Files', $selectfilesource[0] )];
-        $selectfileandpath = resource_get_file_and_path($this->current->course, $filesourceid);
-        // $selectfileandpath = NULL;
+        //$filesourceid = $selectfilesource[1][array_search( /*result of above selectbox*/ 'Files', $selectfilesource[0] )];
+        //$selectfileandpath = resource_get_file_and_path($this->current->course, $filesourceid);
+        $selectfileandpath = NULL;
         $mform->addElement('select', 'selectfileandpath', get_string('selectfileandpath', 'resource'), $selectfileandpath);
         
         // End of new stuff

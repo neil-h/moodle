@@ -25,15 +25,10 @@
 
 define('AJAX_SCRIPT', true);
 
-require_once("$CFG->libdir/filelib.php");
-require_once("$CFG->libdir/resourcelib.php");
-require_once("$CFG->dirroot/mod/resource/lib.php");
+global $CFG, $DB;
+require(__DIR__ . '/../../config.php');
 
 $resource_select = required_param('resid', PARAM_INT);
-/*
- * Generate list of files in selected resource .
- */
-global $DB;
 
 function name_and_path($file){
     return $file->get_filepath().$file->get_filename();
@@ -53,10 +48,21 @@ function cmp_by_path_then_name($a, $b) {
     }
 }
 
+function array2opts($array) {
+  foreach ($array as $key => $value) {
+    $output .= '<option value="' . $key . '">' . $value . '</option>';
+  }
+  return $output;
+}
+
 $fs = get_file_storage();
 $context = context_module::instance($resource_select);
 $files = $fs->get_area_files($context->id, 'mod_resource', 'content', 0, 'sortorder', false);
+if ($files == []){
+    $files = $fs->get_area_files($context->id, 'mod_folder', 'content', 0, 'sortorder', false);
+};
 usort($files, "cmp_by_path_then_name");
 
 $filesA = array_map("name_and_path", $files);
-echo $filesA;
+
+echo array2opts($filesA);

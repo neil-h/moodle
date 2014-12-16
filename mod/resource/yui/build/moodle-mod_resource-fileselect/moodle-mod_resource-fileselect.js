@@ -30,13 +30,10 @@ NS = M.mod_resource.fileselect = {};
 
 NS.init = function() {
 
-    var resid = 2;
     var url = M.cfg.wwwroot + '/mod/resource/ajax.php';
-    console.log('url = ' + url);
-
-    document.getElementById("id_selectfilesource").onchange = function () {
-        makeRequest(url + '?resid=' + resid);
-        console.log('changed');
+    var select = document.getElementById("id_selectfilesource");
+    select.onchange = function () {
+        makeRequest(url + '?resid=' + select.value);
     };
 
     function makeRequest(url) {
@@ -46,15 +43,15 @@ NS.init = function() {
             alert('Giving up :( Cannot create an XMLHTTP instance');
             return false;
         }
-        httpRequest.onreadystatechange = alertContents;
+        httpRequest.onreadystatechange = response;
         httpRequest.open('GET', url, true);
         httpRequest.send();
     }
 
-    function alertContents() {
+    function response() {
         if (httpRequest.readyState === 4) {
             if (httpRequest.status === 200) {
-                alert(httpRequest.responseText);
+                document.getElementById("id_selectfileandpath").innerHTML = httpRequest.response;
             } else {
                 alert('There was a problem with the request.');
             }

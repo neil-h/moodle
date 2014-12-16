@@ -504,12 +504,21 @@ function resource_get_file_sources($courseid){
     $thisid = array('0' => NULL);
     $ids = array_merge($thisid, $filesourceids);
     
-    return array($names, $ids);
+    $test = [
+	"0" => "Ooh, ooh, let's use this one!",
+	"5" => "A Folder!!!",
+	"2" => "Files",
+	"3" => "Lesson 1-1",
+	"4" => "zzz.txt",
+];
+    return $test;
+    //return array($names, $ids);
 }
 
 /*
  * Generate list of files in selected resource .
  */
+/*
 function resource_get_file_and_path($filesourceid){
     global $DB;
 
@@ -539,3 +548,4 @@ function resource_get_file_and_path($filesourceid){
     $filesA = array_map("name_and_path", $files);
     return $filesA;
 }
+/*
