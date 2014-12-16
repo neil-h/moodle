@@ -502,17 +502,9 @@ function resource_get_file_sources($courseid){
     }
     
     $thisid = array('0' => NULL);
-    $ids = array_merge($thisid, $filesourceids);
-    
-    $test = [
-	"0" => "Ooh, ooh, let's use this one!",
-	"5" => "A Folder!!!",
-	"2" => "Files",
-	"3" => "Lesson 1-1",
-	"4" => "zzz.txt",
-];
-    return $test;
-    //return array($names, $ids);
+    $ids = array_merge($thisid, $filesourceids); 
+
+    return array_combine($ids, $names);
 }
 
 /*
