@@ -141,10 +141,9 @@ function resource_update_instance($data, $mform) {
  ***
  *** @param object $data Data object
  ***/
-function resource_set_context_options($data) {
-    $selectfilesource = resource_get_file_sources($this->current->course);
+function resource_set_source_options($data) {
     $resourcefilesourceoptions = array();
-    $resourcefilesourceoptions['selectfilesource']  = $selectfilesource[1][array_search( $data->selectfilesource, $selectfilesource[0] )];
+    $resourcefilesourceoptions['selectfilesource']  = $data->selectfilesource;
     $resourcefilesourceoptions['selectfileandpath']  = $data->selectfileandpath;
     $data->resourcefilesourceoptions = serialize($resourcefilesourceoptions);
 }

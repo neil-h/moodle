@@ -69,10 +69,18 @@ class mod_resource_mod_form extends moodleform_mod {
          */
         $selectfilesource = resource_get_file_sources($this->current->course);
         $mform->addElement('select', 'selectfilesource', get_string('selectfilesource', 'resource'), $selectfilesource);
-               
-        //$filesourceid = $selectfilesource[1][array_search( /*result of above selectbox*/ 'Files', $selectfilesource[0] )];
+        
+        $selectfileandpath = [
+            0 => NULL,
+            1 => NULL,
+            2 => NULL,
+            3 => NULL,
+            4 => NULL,
+            5 => NULL,
+            6 => NULL,
+            7 => NULL,
+        ];
         //$selectfileandpath = resource_get_file_and_path($this->current->course, $filesourceid);
-        $selectfileandpath = NULL;
         $mform->addElement('select', 'selectfileandpath', get_string('selectfileandpath', 'resource'), $selectfileandpath);
         
         // End of new stuff
@@ -167,6 +175,15 @@ class mod_resource_mod_form extends moodleform_mod {
 
     function data_preprocessing(&$default_values) {
         if ($this->current->instance and !$this->current->tobemigrated) {
+            if (!empty($default_values['resourcefilesourceoptions'])) {
+                $resourcefilesourceoptions = unserialize($default_values['resourcefilesourceoptions']);
+                if (isset($resourcefilesourceoptions['selectfilesource'])) {
+                    $default_values['selectfilesource'] = $resourcefilesourceoptions['selectfilesource'];
+                }
+                if (!empty($resourcefilesourceoptions['selectfileandpath'])) {
+                    $default_values['selectfileandpath'] = $resourcefilesourceoptions['selectfileandpath'];
+                }
+            }
             $draftitemid = file_get_submitted_draft_itemid('files');
             file_prepare_draft_area($draftitemid, $this->context->id, 'mod_resource', 'content', 0, array('subdirs'=>true));
             $default_values['files'] = $draftitemid;

@@ -74,6 +74,41 @@ function xmldb_resource_upgrade($oldversion) {
 
     // Moodle v2.8.0 release upgrade line.
     // Put any upgrade step following this.
+    if ($oldversion < 2014121600) {
+
+        // Define table resource to be created.
+        $table = new xmldb_table('resource');
+
+        // Adding fields to table resource.
+        $table->add_field('id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE, null);
+        $table->add_field('course', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('name', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, null);
+        $table->add_field('intro', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('introformat', XMLDB_TYPE_INTEGER, '4', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('tobemigrated', XMLDB_TYPE_INTEGER, '4', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('legacyfiles', XMLDB_TYPE_INTEGER, '4', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('legacyfileslast', XMLDB_TYPE_INTEGER, '10', null, null, null, null);
+        $table->add_field('resourcefilesourceoptions', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('display', XMLDB_TYPE_INTEGER, '4', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('displayoptions', XMLDB_TYPE_TEXT, null, null, null, null, null);
+        $table->add_field('filterfiles', XMLDB_TYPE_INTEGER, '4', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('revision', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('timemodified', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0');
+
+        // Adding keys to table resource.
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        // Adding indexes to table resource.
+        $table->add_index('course', XMLDB_INDEX_NOTUNIQUE, array('course'));
+
+        // Conditionally launch create table for resource.
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+
+        // Resource savepoint reached.
+        upgrade_mod_savepoint(true, 2014121600, 'resource');
+    }
 
     return true;
 }

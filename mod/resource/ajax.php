@@ -27,9 +27,11 @@ define('AJAX_SCRIPT', true);
 
 global $CFG, $DB;
 require(__DIR__ . '/../../config.php');
+require_once($CFG->dirroot.'/mod/resource/locallib.php');
 
-$resource_select = required_param('resid', PARAM_INT);
-
+$filesourceid = required_param('resid', PARAM_INT);
+$files = resource_get_file_and_path($filesourceid);
+/*
 function name_and_path($file){
     return $file->get_filepath().$file->get_filename();
 }
@@ -47,14 +49,14 @@ function cmp_by_path_then_name($a, $b) {
         return $result;
     }
 }
-
+*/
 function array2opts($array) {
   foreach ($array as $key => $value) {
     $output .= '<option value="' . $key . '">' . $value . '</option>';
   }
   return $output;
 }
-
+/*
 $fs = get_file_storage();
 $context = context_module::instance($resource_select);
 $files = $fs->get_area_files($context->id, 'mod_resource', 'content', 0, 'sortorder', false);
@@ -64,5 +66,5 @@ if ($files == []){
 usort($files, "cmp_by_path_then_name");
 
 $filesA = array_map("name_and_path", $files);
-
-echo array2opts($filesA);
+ */
+echo array2opts($files);

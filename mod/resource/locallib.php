@@ -510,7 +510,7 @@ function resource_get_file_sources($courseid){
 /*
  * Generate list of files in selected resource .
  */
-/*
+
 function resource_get_file_and_path($filesourceid){
     global $DB;
 
@@ -535,9 +535,11 @@ function resource_get_file_and_path($filesourceid){
     $fs = get_file_storage();
     $context = context_module::instance($filesourceid);
     $files = $fs->get_area_files($context->id, 'mod_resource', 'content', 0, 'sortorder', false);
+    if ($files == []){
+        $files = $fs->get_area_files($context->id, 'mod_folder', 'content', 0, 'sortorder', false);
+    };
     usort($files, "cmp_by_path_then_name");
 
     $filesA = array_map("name_and_path", $files);
     return $filesA;
 }
-/*

@@ -32,9 +32,10 @@ NS.init = function() {
 
     var url = M.cfg.wwwroot + '/mod/resource/ajax.php';
     var select = document.getElementById("id_selectfilesource");
-    select.onchange = function () {
+    
+    function makeit() {
         makeRequest(url + '?resid=' + select.value);
-    };
+    }
 
     function makeRequest(url) {
         httpRequest = new XMLHttpRequest();
@@ -57,6 +58,10 @@ NS.init = function() {
             }
         }
     }
+    
+    select.onchange = makeit;
+    
+    Y.on('domready', makeit );
 
 };
 
