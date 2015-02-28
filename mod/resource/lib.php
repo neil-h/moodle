@@ -144,7 +144,8 @@ function resource_update_instance($data, $mform) {
 function resource_set_source_options($data) {
     $resourcefilesourceoptions = array();
     $resourcefilesourceoptions['selectfilesource']  = $data->selectfilesource;
-    $resourcefilesourceoptions['selectfileandpath']  = $data->selectfileandpath;
+    //$resourcefilesourceoptions['selectfileandpath']  = $data->selectfileandpath;
+    $resourcefilesourceoptions['enterfileandpath']  = $data->enterfileandpath;//Trying the text box
     $data->resourcefilesourceoptions = serialize($resourcefilesourceoptions);
 }
 

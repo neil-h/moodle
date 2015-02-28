@@ -80,7 +80,7 @@ if (count($files) < 1) {
     resource_print_filenotfound($resource, $cm, $course);
     die;
 } else {
-    $selectedFile = '/html/L2-1.html';//Magic number
+    $selectedFile = '/3-1.txt';//Magic number
     foreach($files as $onefile) {
         if ($selectedFile == ($onefile->get_filepath().$onefile->get_filename())){
             $file = $onefile;

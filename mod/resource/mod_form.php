@@ -72,16 +72,11 @@ class mod_resource_mod_form extends moodleform_mod {
         
         $selectfileandpath = [
             0 => NULL,
-            1 => NULL,
-            2 => NULL,
-            3 => NULL,
-            4 => NULL,
-            5 => NULL,
-            6 => NULL,
-            7 => NULL,
         ];
         //$selectfileandpath = resource_get_file_and_path($this->current->course, $filesourceid);
         $mform->addElement('select', 'selectfileandpath', get_string('selectfileandpath', 'resource'), $selectfileandpath);
+        
+        $mform->addElement('text', 'enterfileandpath', get_string('enterfileandpath'), array('size'=>'48'));//Let's try with a text box
         
         // End of new stuff
 
