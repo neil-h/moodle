@@ -71,7 +71,6 @@ function resource_display_embed($resource, $cm, $course, $file) {
     } else {
         $context = context_module::instance($cm->id);
     }
-    //$context = context_module::instance(2);//Magic number
     $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$file->get_filepath().$file->get_filename();
     $fullurl = file_encode_url($CFG->wwwroot.'/pluginfile.php', $path, false);
     $moodleurl = new moodle_url('/pluginfile.php' . $path);
@@ -143,7 +142,6 @@ function resource_display_frame($resource, $cm, $course, $file) {
         } else {
             $context = context_module::instance($cm->id);
         }
-        //$context = context_module::instance(2);//Magic number
         $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$file->get_filepath().$file->get_filename();
         $fileurl = file_encode_url($CFG->wwwroot.'/pluginfile.php', $path, false);
         $navurl = "$CFG->wwwroot/mod/resource/view.php?id=$cm->id&amp;frameset=top";
@@ -305,7 +303,6 @@ function resource_get_optional_details($resource, $cm) {
         } else {
             $context = context_module::instance($cm->id);
         }
-        //$context = context_module::instance(2);//Magic number
         $size = '';
         $type = '';
         $fs = get_file_storage();
@@ -533,13 +530,13 @@ function resource_get_file_and_path($filesourceid){
         return $file->get_filepath().$file->get_filename();
     }
 
-    function cmp_by_path_then_name($a, $b) {
-        if ($a->get_filepath() === $b->get_filepath()){
+    function cmp_by_path_then_name($a, $b) {//sort by filepath, then filename
+        if ($a->get_filepath() === $b->get_filepath()){//if path is identical, sort by filename
             $nameA = $a->get_filename();
             $nameB = $b->get_filename();
             $result = strcmp($nameA, $nameB);
             return $result;
-        } else {
+        } else {//if path is not identical, sort by path
             $pathA = $a->get_filepath();
             $pathB = $b->get_filepath();
             $result = strcmp($pathA, $pathB);
@@ -552,7 +549,7 @@ function resource_get_file_and_path($filesourceid){
     $files = $fs->get_area_files($context->id, 'mod_resource', 'content', 0, 'sortorder', false);
     if ($files == []){
         $files = $fs->get_area_files($context->id, 'mod_folder', 'content', 0, 'sortorder', false);
-    };
+    }//See if NetBeans broke this
     usort($files, "cmp_by_path_then_name");
 
     $filesA = array_map("name_and_path", $files);

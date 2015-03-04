@@ -27,3 +27,14 @@ TODO:
  * reimplement portfolio support (MDL-20079)
  * new backup/restore and old restore migration (MDL-20081)
  * reimplement resource name filter as part of more general activitynames filter (MDL-20083)
+
+ 
+ 
+ =========================
+ Neil Haskins
+ 
+ Implementing "mini-site" support, i.e. linking to other file contexts
+	Linking to other Resource instances - Works
+	Linking to Folders - does not yet work
+	Backup and restore as new course - Doesn't work. Draws from original course.
+	Backup and merge into existing course - Doesn't work. Draws from original course.
