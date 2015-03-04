@@ -65,8 +65,13 @@ function resource_display_embed($resource, $cm, $course, $file) {
 
     $clicktoopen = resource_get_clicktoopen($file, $resource->revision);
 
-    //$context = context_module::instance($cm->id);
-    $context = context_module::instance(2);//Magic number
+    $filesource = unserialize($resource->resourcefilesourceoptions)['selectfilesource'];
+    if ($filesource != 0){
+        $context = context_module::instance($filesource);
+    } else {
+        $context = context_module::instance($cm->id);
+    }
+    //$context = context_module::instance(2);//Magic number
     $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$file->get_filepath().$file->get_filename();
     $fullurl = file_encode_url($CFG->wwwroot.'/pluginfile.php', $path, false);
     $moodleurl = new moodle_url('/pluginfile.php' . $path);
@@ -132,8 +137,13 @@ function resource_display_frame($resource, $cm, $course, $file) {
 
     } else {
         $config = get_config('resource');
-        //$context = context_module::instance($cm->id);
-        $context = context_module::instance(2);//Magic number
+        $filesource = unserialize($resource->resourcefilesourceoptions)['selectfilesource'];
+        if ($filesource != 0){
+            $context = context_module::instance($filesource);
+        } else {
+            $context = context_module::instance($cm->id);
+        }
+        //$context = context_module::instance(2);//Magic number
         $path = '/'.$context->id.'/mod_resource/content/'.$resource->revision.$file->get_filepath().$file->get_filename();
         $fileurl = file_encode_url($CFG->wwwroot.'/pluginfile.php', $path, false);
         $navurl = "$CFG->wwwroot/mod/resource/view.php?id=$cm->id&amp;frameset=top";
@@ -289,8 +299,13 @@ function resource_get_optional_details($resource, $cm) {
 
     $options = empty($resource->displayoptions) ? array() : unserialize($resource->displayoptions);
     if (!empty($options['showsize']) || !empty($options['showtype'])) {
-        //$context = context_module::instance($cm->id);
-        $context = context_module::instance(2);//Magic number
+        $filesource = unserialize($resource->resourcefilesourceoptions)['selectfilesource'];
+        if ($filesource != 0){
+            $context = context_module::instance($filesource);
+        } else {
+            $context = context_module::instance($cm->id);
+        }
+        //$context = context_module::instance(2);//Magic number
         $size = '';
         $type = '';
         $fs = get_file_storage();

@@ -49,8 +49,13 @@ if ($r) {
 $course = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST);
 
 require_course_login($course, true, $cm);
-//$context = context_module::instance($cm->id);
-$context = context_module::instance(2);//Magic number
+$filesource = unserialize($resource->resourcefilesourceoptions)['selectfilesource'];
+if ($filesource != 0){
+    $context = context_module::instance($filesource);
+} else {
+    $context = context_module::instance($cm->id);
+}
+//$context = context_module::instance(2);//Magic number
 require_capability('mod/resource:view', $context);
 
 $params = array(
@@ -75,14 +80,18 @@ if ($resource->tobemigrated) {
 }
 
 $fs = get_file_storage();
-$files = $fs->get_area_files($context->id, 'mod_resource', 'content', 0, 'sortorder DESC, id ASC', false); // TODO: this is not very efficient!!
+$contextid = $context->id;
+$files = $fs->get_area_files($context->id, 'mod_resource', 'content', 0, 'sortorder DESC, id ASC', false); // TODO: this is not very efficient!!//need to enable folders
+//$files = $fs->get_area_files($context->id, 'mod_folder', 'content', 0, 'sortorder DESC, id ASC', false); //need to enable folders
 if (count($files) < 1) {
     resource_print_filenotfound($resource, $cm, $course);
     die;
 } else {
-    $selectedFile = '/3-1.txt';//Magic number
+    //$selectedFile = '/3-1.txt';//Magic number
+    $selectedfile = unserialize($resource->resourcefilesourceoptions)['enterfileandpath'];
     foreach($files as $onefile) {
-        if ($selectedFile == ($onefile->get_filepath().$onefile->get_filename())){
+        $test = $onefile->get_filepath().$onefile->get_filename();
+        if ($selectedfile == ($onefile->get_filepath().$onefile->get_filename())){
             $file = $onefile;
             break;
         }

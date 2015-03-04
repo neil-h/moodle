@@ -175,8 +175,8 @@ class mod_resource_mod_form extends moodleform_mod {
                 if (isset($resourcefilesourceoptions['selectfilesource'])) {
                     $default_values['selectfilesource'] = $resourcefilesourceoptions['selectfilesource'];
                 }
-                if (!empty($resourcefilesourceoptions['selectfileandpath'])) {
-                    $default_values['selectfileandpath'] = $resourcefilesourceoptions['selectfileandpath'];
+                if (!empty($resourcefilesourceoptions['enterfileandpath'])) {
+                    $default_values['enterfileandpath'] = $resourcefilesourceoptions['enterfileandpath'];
                 }
             }
             $draftitemid = file_get_submitted_draft_itemid('files');
