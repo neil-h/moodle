@@ -55,7 +55,6 @@ if ($filesource != 0){
 } else {
     $context = context_module::instance($cm->id);
 }
-//$context = context_module::instance(2);//Magic number
 require_capability('mod/resource:view', $context);
 
 $params = array(
@@ -82,15 +81,13 @@ if ($resource->tobemigrated) {
 $fs = get_file_storage();
 $contextid = $context->id;
 $files = $fs->get_area_files($context->id, 'mod_resource', 'content', 0, 'sortorder DESC, id ASC', false); // TODO: this is not very efficient!!//need to enable folders
-//$files = $fs->get_area_files($context->id, 'mod_folder', 'content', 0, 'sortorder DESC, id ASC', false); //need to enable folders
+//$files = $fs->get_area_files($context->id, 'mod_folder', 'content', 0, 'sortorder DESC, id ASC', false);
 if (count($files) < 1) {
     resource_print_filenotfound($resource, $cm, $course);
     die;
 } else {
-    //$selectedFile = '/3-1.txt';//Magic number
     $selectedfile = unserialize($resource->resourcefilesourceoptions)['enterfileandpath'];
     foreach($files as $onefile) {
-        $test = $onefile->get_filepath().$onefile->get_filename();
         if ($selectedfile == ($onefile->get_filepath().$onefile->get_filename())){
             $file = $onefile;
             break;
