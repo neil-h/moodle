@@ -1256,7 +1256,7 @@ class HTML_QuickForm extends HTML_Common {
     * The main difference is that existing keys will not be renumbered
     * if they are integers.
     *
-    * @access   puplic
+    * @access   public
     * @param    array   $a  original array
     * @param    array   $b  array which will be merged into first one
     * @return   array   merged array
